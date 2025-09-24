@@ -1,0 +1,41 @@
+### Opret et nyt digt (gemmer ID'et i en variabel)
+# @name createPoem
+POST http://localhost:7071/api/poem
+Content-Type: application/json
+
+{
+  "title": "Frisk Morgen",
+  "author": "Test Digter",
+  "content": "Solen står nu op,\ndagen starter helt på ny,\nhåbet vender hjem."
+}
+
+> {%
+    client.global.set("poemId", response.body.id);
+%}
+
+### Hent ALLE digte efter oprettelse
+GET http://localhost:7071/api/poem
+Accept: application/json
+
+### Hent det specifikke digt vi lige har oprettet
+GET http://localhost:7071/api/poem/{{poemId}}
+Accept: application/json
+
+### Opdater det specifikke digt
+PUT http://localhost:7071/api/poem/{{poemId}}
+Content-Type: application/json
+
+{
+  "title": "Frisk Morgen (Redigeret)",
+  "author": "Test Digter",
+  "content": "Solen står nu op,\ndagen starter helt på ny,\nhåbet vender hjem, min ven."
+}
+
+### Slet det specifikke digt
+DELETE http://localhost:7071/api/poem/{{poemId}}
+Accept: application/json
+
+### Hent ALLE digte efter sletning (listen bør være tom igen)
+GET http://localhost:7071/api/poem
+Accept: application/json
+
